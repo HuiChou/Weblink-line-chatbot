@@ -8,8 +8,8 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 # Set OpenAI API details
 openai.api_type = "azure"
 openai.api_version = "2023-09-15-preview"
-openai.api_key = os.getenv("OPENAI_API_KEY")
-openai.api_base = os.getenv("OPENAI_API_BASE")
+openai.api_key = os.getenv(OPENAI_API_KEY)
+openai.api_base = os.getenv(OPENAI_API_BASE)
 
 app = Flask(__name__)
 
@@ -33,7 +33,6 @@ def aoai_chat_model(chat):
     # Send the recent messages to the OpenAI API and get the response
     response_chat = openai.ChatCompletion.create(
         engine="gpt-35-turbo",
-        prompt="",
         messages=recent_messages,
         temperature=1,
         max_tokens=800,
@@ -49,8 +48,8 @@ def aoai_chat_model(chat):
     return response_chat['choices'][0]['message']['content'].strip()
 
 # Initialize Line API with access token and channel secret
-line_bot_api = LineBotApi(os.getenv("LINE_ACCESS_TOKEN"))
-handler1 = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
+line_bot_api = LineBotApi(os.getenv(LINE_ACCESS_TOKEN))
+handler1 = WebhookHandler(os.getenv(LINE_CHANNEL_SECRET))
 
 # This route serves as a health check or landing page for the web app.
 @app.route("/")
