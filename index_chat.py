@@ -31,7 +31,7 @@ def aoai_chat_model(chat):
     recent_messages = messages[-5:]
 
     # Send the recent messages to the OpenAI API and get the response
-    response_chat = openai.ChatCompletion.create(
+    response_chat = openai.Chat.Completion.create(
         engine="gpt-35-turbo",
         messages=recent_messages,
         temperature=1,
