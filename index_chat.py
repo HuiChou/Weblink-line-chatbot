@@ -31,11 +31,11 @@ def aoai_chat_model(chat):
     recent_messages = messages[-5:]
 
     # Send the recent messages to the OpenAI API and get the response
-    response_chat = openai.Chat.Completion.create(
+    response_chat = openai.chat.completions.create(
         engine="gpt-35-turbo",
         messages=recent_messages,
-        temperature=1,
-        max_tokens=800,
+        temperature=0.7,
+        max_tokens=150,
         top_p=0.95,
         frequency_penalty=0,
         presence_penalty=0,
@@ -48,8 +48,8 @@ def aoai_chat_model(chat):
     return response_chat['choices'][0]['message']['content'].strip()
 
 # Initialize Line API with access token and channel secret
-line_bot_api = LineBotApi(os.getenv("LINE_ACCESS_TOKEN"))
-handler1 = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
+line_bot_api = LineBotApi(os.getenv('LINE_ACCESS_TOKEN'))
+handler1 = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
 
 # This route serves as a health check or landing page for the web app.
 @app.route("/")
