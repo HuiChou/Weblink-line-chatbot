@@ -1,15 +1,15 @@
 from flask import Flask, request, abort
 import os
-import openai
+from openai import AzureOpenAI
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 # Set OpenAI API details
-openai.api_type = "azure"
-openai.api_version = "2024-02-01"
-openai.api_key = os.getenv("OPENAI_API_KEY")
-openai.api_base = os.getenv("OPENAI_API_BASE")
+AzureOpenAI.api_type = "azure"
+AzureOpenAI.api_version = "2024-02-01"
+AzureOpenAI.api_key = os.getenv("OPENAI_API_KEY")
+AzureOpenAI.api_base = os.getenv("OPENAI_API_BASE")
 
 app = Flask(__name__)
 
@@ -31,7 +31,7 @@ def aoai_chat_model(chat):
     recent_messages = messages[-5:]
 
     # Send the recent messages to the OpenAI API and get the response
-    response_chat = openai.chat.completions.create(
+    response_chat = AzureOpenAI.chat.completions.create(
         engine="gpt-35-turbo",
         messages=recent_messages,
         temperature=0.7,
